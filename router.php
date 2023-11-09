@@ -8,6 +8,7 @@
 
   $router -> addRoute('peliculas', 'GET', 'PeliculaApiController', 'get');
   $router -> addRoute('peliculas/:ID', 'GET', 'PeliculaApiController', 'get');
+  $router -> addRoute('peliculas', 'POST', 'PeliculaApiController', 'create');
   $router -> addRoute('peliculas/:ID', 'DELETE', 'PeliculaApiController', 'delete');
   
 

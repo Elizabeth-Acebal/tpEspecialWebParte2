@@ -4,14 +4,15 @@ require_once 'app/models/pelicula.model.php';
 require_once 'app/models/genero.model.php';
 require_once 'app/models/auth.model.php';
 require_once 'app/views/api.view.php';
+require_once 'app/controllers/api.controller.php';
 
-     class PeliculaApiController {
-       private $view;
+     class PeliculaApiController extends ApiController {
        private $model;
 
        function __construct() {
+         parent::__construct();
          $this -> model = new PeliculaModel();
-         $this -> view = new APIView();
+         
        }
 
 
@@ -31,7 +32,7 @@ require_once 'app/views/api.view.php';
           }
        }
 
-       
+
 
      }
 
