@@ -32,7 +32,19 @@ require_once 'app/controllers/api.controller.php';
           }
        }
 
+       function create($params = []) {
+         $body = $this->getData();
 
+         
+         $titulo = $body->titulo;
+         $descripcion = $body->descripcion;
+         $director = $body->director;
+         $calificacion = $body->calificacion;
+         $id_genero = $body->id_genero;
+
+         $id = $this -> model -> agregarPelicula($titulo, $descripcion, $director, $calificacion, $id_genero);
+         $this->view->response('la pelicula fue insertada con el id='.$id,201);
+       }
 
      }
 
