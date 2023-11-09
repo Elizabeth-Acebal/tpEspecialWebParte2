@@ -54,6 +54,8 @@ class PeliculaModel{
     }
     // obtiene la lista de peliculas de la DB según género
     public function getPeliculaConGenero(){
+    // obtiene la lista de peliculas de la DB según género
+    //http://localhost/tpEspecialWeb2Parte2/api/peliculasConGenero
         
         $query= $this->db->prepare("SELECT peliculas.*, generos.genero as genero FROM peliculas JOIN generos ON peliculas.id_genero=generos.id_genero");  
         $query->execute();
@@ -74,11 +76,19 @@ class PeliculaModel{
     function eliminarPelicula($pelicula_id) {
         $query = $this->db->prepare('DELETE FROM peliculas WHERE pelicula_id = ?');
         $query->execute([$pelicula_id]);
+        return $query->rowCount(); //CAMBIO, devuelve la cantidad de columnas afectadas.
     }
 
     function editarPelicula($titulo, $descripcion, $director, $calificacion,$id_genero,$pelicula_id ){
-        $query = $this->db->prepare("UPDATE peliculas SET `titulo`=?,`descripcion`=?,`director`=?,`calificacion`=?, `id_genero`=? WHERE `pelicula_id`=?");
-        $query->execute([$titulo, $descripcion, $director, $calificacion,$id_genero,$pelicula_id]);
+        $sql = "UPDATE peliculas 
+                SET `titulo`=?,`descripcion`=?,`director`=?,`calificacion`=?, `id_genero`=?
+                WHERE `pelicula_id`=?"; //CAMBIO
+
+        $query = $this->db->prepare($sql);
+        $result=$query->execute([$titulo, $descripcion, $director, $calificacion,$id_genero,$pelicula_id]);
+
+        return $result;
+
     }
     function ShowGeneroPeliculas($id_genero){
         $query = $this->db->prepare("SELECT * FROM `peliculas` WHERE `id_genero`=?");
