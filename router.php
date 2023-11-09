@@ -10,6 +10,7 @@
   $router -> addRoute('peliculas/:ID', 'GET', 'PeliculaApiController', 'get');
   $router -> addRoute('peliculas', 'POST', 'PeliculaApiController', 'create');
   $router -> addRoute('peliculas/:ID', 'DELETE', 'PeliculaApiController', 'delete');
+  $router->addRoute('peliculas/:ID', 'PUT', 'peliculaApiController', 'modificar');
   
 
   $router -> route($_GET['resource'], $_SERVER['REQUEST_METHOD']);

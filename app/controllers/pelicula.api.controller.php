@@ -32,6 +32,40 @@ require_once 'app/controllers/api.controller.php';
           }
        }
 
+
+       public function delete($params=null){
+        $pelicula_id= $params[':ID'];
+        $success= $this->peliculaModel->eliminarPelicula($pelicula_id);
+        if($success){
+        $this->view->response("La pelicula con el id=$pelicula_id se borró exitosamente",200);
+        }else{
+            $this->view->response("La pelicula con el id=$pelicula_id no existe",404);
+        }
+      }
+
+       public function modificar($params=null){
+        $pelicula_id= $params[':ID'];
+        $body=$this->getData();
+    
+        $titulo= $body->titulo;
+        $descripcion= $body->descripcion;
+        $director= $body-> director;
+        $calificacion= $body-> calificacion;
+        $id_genero= $body->id_genero;
+
+
+        $success= $this->peliculaModel->editarPelicula($titulo, $descripcion, $director, $calificacion,$id_genero,$pelicula_id);
+
+        if($success){
+            $this->view->response("Se actualizo la pelicula con el id=$pelicula_id exitosamente",200);
+
+        }else{
+            $this->view->response("No se pudo actualizar la pelicula",500);
+        }
+
+
+    }
+
        function create($params = []) {
          $body = $this->getData();
 
