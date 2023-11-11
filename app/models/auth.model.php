@@ -9,7 +9,7 @@ class AuthModel {
         MYSQL_USER, MYSQL_PASS);
     }
 
-    public function getUserByEmail($email) {
+    public function getByEmail($email) {
         $query = $this->db->prepare("SELECT * FROM usuario WHERE email = ?");
         $query->execute([$email]);
         return $query->fetch(PDO::FETCH_OBJ);

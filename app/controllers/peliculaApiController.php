@@ -1,25 +1,39 @@
 <?php
 
 require_once 'app/models/pelicula.model.php';
-require_once 'app/models/genero.model.php';
 require_once 'app/models/auth.model.php';
 require_once 'app/views/api.view.php';
+require_once 'app/helpers/auth.helper.php';
 require_once 'app/controllers/api.controller.php';
 
      class PeliculaApiController extends ApiController {
        private $model;
+       private $authHelper;
 
        function __construct() {
          parent::__construct();
          $this -> model = new PeliculaModel();
+         $this -> authHelper = new authHelper();
          
        }
 
 
        function get($params =[]) {
+         $user =  $this->authHelper->currentUser();
+         if(!$user){
+          $this ->view-> response('Sin autorización', 401);
+          return;
+         }
+
+         if($user->role !='admin'){
+          $this ->view-> response('Forbidden', 403);
+          return;
+         }
+
          if (empty($params)){
            $peliculas = $this->model->getPeliculas();
            $this ->view-> response($peliculas, 200);
+           return;
           }
           else{
             $pelicula =  $this->model->getPelicula($params[":ID"]);
@@ -28,6 +42,7 @@ require_once 'app/controllers/api.controller.php';
             }
             else{
               $this->view->response(['msg' => 'La tarea con el id='.$params[':ID'].' no existe'], 404);
+              return;
             }
           }
        }

@@ -3,3 +3,4 @@
     const MYSQL_PASS = '';
     const MYSQL_DB = 'db_peliculas';
     const MYSQL_HOST = 'localhost';
+    const JWT_KEY = 'admin';

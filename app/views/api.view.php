@@ -1,7 +1,7 @@
 <?php
     
     class APIView {
-       public function response($data, $status) {
+       public function response($data, $status = 200) {
          header('content-type: application/json');
          header('HTTP/1.1'.$status." ".$this->_requestStatus($status));
          echo json_encode($data);
