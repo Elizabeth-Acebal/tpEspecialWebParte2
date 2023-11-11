@@ -64,6 +64,16 @@ class PeliculaModel{
         
     }
 
+    public function getPeliculaPorGenero($id_genero) {
+        $query = $this->db->prepare("SELECT peliculas.*, generos.genero 
+                                    FROM peliculas 
+                                    JOIN generos ON peliculas.id_genero = generos.id_genero 
+                                    WHERE peliculas.id_genero = ?");
+        $query->execute([$id_genero]);
+        $peliculas = $query->fetchAll(PDO::FETCH_OBJ);
+        return $peliculas;
+    }
+
     /**
      * Inserta una pelicula en la base de datos.
      */

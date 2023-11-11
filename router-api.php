@@ -1,7 +1,7 @@
 <?php
   require_once 'libs/router.php';
   require_once 'app/controllers/peliculaApiController.php';
-  require_once 'app/controllers/UserApiController.php';
+  //require_once 'app/controllers/UserApiController.php';
   
 
 
@@ -10,10 +10,11 @@
 
   $router -> addRoute('peliculas', 'GET', 'PeliculaApiController', 'get');
   $router -> addRoute('peliculas/:ID', 'GET', 'PeliculaApiController', 'get');
+  $router -> addRoute('generos/:id_genero', 'GET', 'PeliculaApiController', 'getPorGenero');
   $router -> addRoute('peliculas', 'POST', 'PeliculaApiController', 'create');
   $router -> addRoute('peliculas/:ID', 'DELETE', 'PeliculaApiController', 'delete');
   $router -> addRoute('peliculas/:ID', 'PUT', 'peliculaApiController', 'modificar');
-  $router -> addRoute('user/token', 'GET', 'UserApiController', 'getToken');
+ // $router -> addRoute('user/token', 'GET', 'UserApiController', 'getToken');
 
 
   //http://localhost/tpEspecialWeb2Parte2/api/peliculasConGenero/57

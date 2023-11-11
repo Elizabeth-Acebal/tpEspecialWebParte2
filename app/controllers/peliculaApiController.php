@@ -19,32 +19,57 @@ require_once 'app/controllers/api.controller.php';
 
 
        function get($params =[]) {
-         $user =  $this->authHelper->currentUser();
-         if(!$user){
-          $this ->view-> response('Sin autorización', 401);
-          return;
-         }
+        // $user =  $this->authHelper->currentUser();
+         //if(!$user){
+         // $this ->view-> response('Sin autorización', 401);
+         // return;
+        // }
 
-         if($user->role !='admin'){
-          $this ->view-> response('Forbidden', 403);
-          return;
-         }
+        // if($user->role !='admin'){
+        //  $this ->view-> response('Forbidden', 403);
+        //  return;
+        // }
 
          if (empty($params)){
            $peliculas = $this->model->getPeliculas();
            $this ->view-> response($peliculas, 200);
            return;
           }
+          if(!empty($pelicula)){
+            return $this->view->response($pelicula, 200);
+            }
+          
           else{
             $pelicula =  $this->model->getPelicula($params[":ID"]);
             if(!empty($pelicula)){
               return $this->view->response($pelicula, 200);
             }
             else{
-              $this->view->response(['msg' => 'La tarea con el id='.$params[':ID'].' no existe'], 404);
+              $this->view->response(['msg' => 'La pelicula con el id='.$params[':ID'].' no existe'], 404);
               return;
             }
           }
+       }
+
+       function getPorGenero($parms = []){
+        if (empty($parms)){
+          $peliculas = $this->model->getPeliculas();
+          $this ->view-> response($peliculas, 200);
+         }
+         if(!empty($pelicula)){
+           return $this->view->response($pelicula, 200);
+           }
+         
+         else{
+           $pelicula =  $this->model->getPeliculaPorGenero($parms[":id_genero"]);
+           if(!empty($pelicula)){
+             return $this->view->response($pelicula, 200);
+           }
+           else{
+             $this->view->response(['msg' => 'La pelicula con el id_genero='.$parms[':id_genero'].' no existe'], 404);
+           }
+         }    
+
        }
 
 
