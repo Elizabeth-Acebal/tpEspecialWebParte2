@@ -1,6 +1,5 @@
 <?php
     require_once 'app/models/pelicula.model.php';
-  //  require_once 'app/models/genero.model.php';
     require_once 'app/views/api.view.php';
     require_once 'app/helpers/auth.helper.php';
 
@@ -23,44 +22,18 @@
             return json_decode($this->data);
         }
 
-        //-----------------------------------
-        function get($params =null) {
-            // $user =  $this->authHelper->currentUser();
-             //if(!$user){
-             // $this ->view-> response('Sin autorización', 401);
-             // return;
-            // }
-    
-            // if($user->role !='admin'){
-            //  $this ->view-> response('Forbidden', 403);
-            //  return;
-            // }
-    
-             if (empty($params)){
-               $peliculas = $this->peliculaModel->getPeliculas();
-               $this ->view-> response($peliculas, 200);
-               return;
-              }
-              if(!empty($pelicula)){
-                return $this->view->response($pelicula, 200);
-                }
-              
-              else{
-                $pelicula =  $this->peliculaModel->ShowPeliculaDetalle($params[":ID"]);
-                if(!empty($pelicula)){
-                  return $this->view->response($pelicula, 200);
-                }
-                else{
-                  $this->view->response( 'La pelicula con el id='.$params[':ID'].' no existe', 404);
-                  return;
-                }
-              }
-           }
-        //-------------------------------------
+        function get($params =null){
 
-        public function getAll($params=null){  //http://localhost/tpEspecialWeb2Parte2/api/peliculasConGenero?sort=ASC&order=titulo
-                                                               //http://localhost/tpEspecialWeb2Parte2/api/peliculasConGenero?sort=DESC&order=titulo
-                                                               //http://localhost/tpEspecialWeb2Parte2/api/peliculasConGenero?sort=ASC&order=genero     ordena por genero
+            $pelicula_id= $params[":ID"];
+            $pelicula =  $this->peliculaModel->ShowPeliculaDetalle($pelicula_id);
+            if($pelicula){
+                $this->view->response($pelicula, 200);
+            }else{
+                $this->view->response( 'La pelicula con el id='.$params[':ID'].' no existe', 404);
+            }
+        }
+
+        public function getAll($params=null){  
             //arreglo vacio
             $parametros=[];
 
@@ -134,19 +107,13 @@
                 }else{
                     $this->view->response("No se pudo actualizar la pelicula,completar todos los campos",400);
                 }
-                
 
             }catch(Exception){
                 $this->view->response("El servidor no pudo interpretar la solicitud dada una sintaxis invalida", 500);
             }
-
-          
-            
-
-
         }
-        function getColumns($param)
-        {
+
+        function getColumns($param){
             $columns = $this->peliculaModel->getAllColumns();
             for ($i = 0; $i < sizeof($columns); $i++) {
                 $aux = $columns[$i]->COLUMN_NAME;
@@ -157,25 +124,11 @@
             return null;
         }
 
-  /*      function existData($param){
-            if ($param!=null){
-                $param->pelicula_id="skipped";
-            }
-            $columns = $this->peliculaModel->getAllColumns();
-            for ($i = 0; $i < sizeof($columns); $i++) {
-                $aux = $columns[$i]->COLUMN_NAME;
-                if (empty($param->$aux)) {
-                    return false;
-                }
-            }
-            return true;
-        }*/
         function existData($param){
             if ($param != null){
                 $param->pelicula_id = "skipped";
                 $param->imagen = "skipped";
             }
-        
             $columns = $this->peliculaModel->getAllColumns();
         
             foreach ($columns as $column) {
