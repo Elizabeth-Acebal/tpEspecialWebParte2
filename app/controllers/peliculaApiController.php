@@ -45,6 +45,11 @@
                 $parametros['order'] = $_GET['order'];
             }
 
+              // Agrega el filtro por género si existe
+            if(isset($_GET['genero'])){
+                $parametros['genero'] = $_GET['genero'];
+            }
+
             //print_r($parametros);
            // die(__FILE__);
 

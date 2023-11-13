@@ -47,6 +47,12 @@ class PeliculaModel{
     // obtiene la lista de peliculas de la DB según género
     public function getPeliculaConGenero($parametros){    
         $sql = 'SELECT peliculas.*, generos.genero as genero FROM peliculas JOIN generos ON peliculas.id_genero=generos.id_genero';
+        
+        
+        // Verifica si hay un filtro por género
+        if(isset($parametros['genero'])){
+            $sql .= ' WHERE generos.genero = ?';
+        }
 
         if(isset($parametros['order'])){
             $sql .= ' ORDER BY '.$parametros['order'];
@@ -59,6 +65,12 @@ class PeliculaModel{
         
 
         $query= $this->db->prepare($sql);  
+
+         // Enlaza el valor del filtro por género si existe
+        if(isset($parametros['genero'])){
+            $query->bindParam(1, $parametros['genero']);
+        }
+    
         $query->execute();
         $peliculas = $query->fetchAll(PDO::FETCH_OBJ);
         return $peliculas;

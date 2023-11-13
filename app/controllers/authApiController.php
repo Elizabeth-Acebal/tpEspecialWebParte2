@@ -13,10 +13,8 @@
     private $view;
     private $model;
     private $authHelper;
-
     private $data;
     
-    //private $data;
     public function __construct() {
         $this->view = new APIview();
         $this->model = new UsuarioModel();
@@ -50,7 +48,6 @@
             $password = $userpass[1];
             $account = $this->model->getByEmail($email);
 
-
             if($email == $account->email && password_verify($password, $account->password)){
                 //ENCABEZADO
                 $header = array(
@@ -64,7 +61,6 @@
                 );
         
                 $payload['exp'] = time() + 5000;
-               
         
                 $header =base64url_encode(json_encode($header));
                 $payload = base64url_encode(json_encode($payload));
@@ -72,8 +68,6 @@
                 $signature=hash_hmac('SHA256', "$header.$payload", JWT_KEY, true);
                 $signature = base64url_encode($signature);
                 $token = "$header.$payload.$signature";
-
-
 
                 //devuelve un nuevo token si es valido
                 $this->view->response($token,200);

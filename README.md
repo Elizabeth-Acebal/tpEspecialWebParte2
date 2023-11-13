@@ -86,16 +86,6 @@ Ej:http://localhost/tpEspecialWeb2Parte2/api/user/token
 Este endpoint se utiliza para tener acceso a un token de seguridad y de esta manera poder tener acceso a manipular los datos y realizar acciones como por ejemplo: eliminar, editar o crear un recurso.
 
 
-
-----Endpoint para paginar----
-
-Agregue parámetros de consulta a las solicitudes GET:
-
-Ej: /
-
-Page se refiere a las páginas y limit refiere a que la pagina deben tener un límite de 10 elementos.
-
-
 ----Endpoint para clasificar----
 
 Agregue parámetros de consulta a las solicitudes GET:
@@ -109,6 +99,6 @@ Sort es para referir a el elemento mediante el cual se van a ordenar/clasificar 
 
 Agregue parámetros de consulta a las solicitudes GET:
 
-Search refiere a una busqueda/filtro de los elementos establecidos en el sortBy.
 
-Ej: 
+
+Ej: http://localhost/tpEspecialWeb2Parte2/api/peliculas/?genero=Terror
