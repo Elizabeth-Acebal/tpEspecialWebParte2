@@ -52,6 +52,9 @@ class PeliculaModel{
         
 
     }
+
+   
+
     // obtiene la lista de peliculas de la DB según género
     public function getPeliculaConGenero(){
     // obtiene la lista de peliculas de la DB según género
@@ -113,6 +116,17 @@ class PeliculaModel{
         $peliculas = $query->fetchAll(PDO::FETCH_OBJ); // devuelve un arreglo de objetos
         return $peliculas;
 
+    }
+
+    function getAllColumns(){
+        $query = $this->db->prepare("SELECT COLUMN_NAME 
+                                                             FROM INFORMATION_SCHEMA.COLUMNS 
+                                                             WHERE TABLE_NAME = N'peliculas'");
+        $query->execute();
+
+        $columns = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $columns;
     }
 
     
