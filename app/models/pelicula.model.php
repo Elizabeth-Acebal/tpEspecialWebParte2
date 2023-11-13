@@ -43,10 +43,22 @@ class PeliculaModel{
         
 
     }
+
     // obtiene la lista de peliculas de la DB según género
-    public function getPeliculaConGenero(){    //http://localhost/tpEspecialWeb2Parte2/api/peliculasConGenero
+    public function getPeliculaConGenero($parametros){    
+        $sql = 'SELECT peliculas.*, generos.genero as genero FROM peliculas JOIN generos ON peliculas.id_genero=generos.id_genero';
+
+        if(isset($parametros['order'])){
+            $sql .= ' ORDER BY '.$parametros['order'];
+            //Si tiene un order utiliza el sort
+            if(isset($parametros['sort'])) {
+                $sql .= ' '.$parametros['sort'];
+            }
+
+        }
         
-        $query= $this->db->prepare("SELECT peliculas.*, generos.genero as genero FROM peliculas JOIN generos ON peliculas.id_genero=generos.id_genero");  
+
+        $query= $this->db->prepare($sql);  
         $query->execute();
         $peliculas = $query->fetchAll(PDO::FETCH_OBJ);
         return $peliculas;
@@ -73,13 +85,13 @@ class PeliculaModel{
     function eliminarPelicula($pelicula_id) {
         $query = $this->db->prepare('DELETE FROM peliculas WHERE pelicula_id = ?');
         $query->execute([$pelicula_id]);
-        return $query->rowCount(); //CAMBIO, devuelve la cantidad de columnas afectadas.
+        return $query->rowCount(); // devuelve la cantidad de columnas afectadas.
     }
 
-    function editarPelicula($titulo, $descripcion, $director, $calificacion,$id_genero,$pelicula_id ){
+    function editarPelicula($titulo, $descripcion, $director, $calificacion, $id_genero, $pelicula_id ){
         $sql = "UPDATE peliculas 
                 SET `titulo`=?,`descripcion`=?,`director`=?,`calificacion`=?, `id_genero`=?
-                WHERE `pelicula_id`=?"; //CAMBIO
+                WHERE `pelicula_id`=?"; 
 
         $query = $this->db->prepare($sql);
         $result=$query->execute([$titulo, $descripcion, $director, $calificacion,$id_genero,$pelicula_id]);
@@ -102,7 +114,15 @@ class PeliculaModel{
 
     }
 
-    
+     //obtener arreglo de las columnas de las tablas
+     function getAllColumns(){
+        $query = $this->db->prepare("SELECT COLUMN_NAME 
+                                                             FROM INFORMATION_SCHEMA.COLUMNS 
+                                                             WHERE TABLE_NAME = N'peliculas'");
+        $query->execute();
+        $columns = $query->fetchAll(PDO::FETCH_OBJ);
+        return $columns;
+    }
 
 }
     
