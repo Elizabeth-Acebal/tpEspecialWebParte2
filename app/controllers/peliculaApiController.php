@@ -24,7 +24,7 @@
         }
 
         //-----------------------------------
-        function get($params =[]) {
+        function get($params =null) {
             // $user =  $this->authHelper->currentUser();
              //if(!$user){
              // $this ->view-> response('Sin autorización', 401);
@@ -51,7 +51,7 @@
                   return $this->view->response($pelicula, 200);
                 }
                 else{
-                  $this->view->response(['msg' => 'La pelicula con el id='.$params[':ID'].' no existe'], 404);
+                  $this->view->response( 'La pelicula con el id='.$params[':ID'].' no existe', 404);
                   return;
                 }
               }
