@@ -18,12 +18,6 @@ class PeliculaApiController extends ApiController
     $this->authHelper = new authHelper();
   }
 
-  // $user =  $this->authHelper->currentUser();
-  //if(!$user){
-  // $this ->view-> response('Sin autorización', 401);
-  // return;
-  // }
-
 
   //-----------------------------------
   function get($params = [])
@@ -163,19 +157,6 @@ class PeliculaApiController extends ApiController
     return null;
   }
 
-  /*      function existData($param){
-            if ($param!=null){
-                $param->pelicula_id="skipped";
-            }
-            $columns = $this->peliculaModel->getAllColumns();
-            for ($i = 0; $i < sizeof($columns); $i++) {
-                $aux = $columns[$i]->COLUMN_NAME;
-                if (empty($param->$aux)) {
-                    return false;
-                }
-            }
-            return true;
-        }*/
   function existData($param)
   {
     if ($param != null) {

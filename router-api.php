@@ -14,9 +14,7 @@ $router->addRoute('peliculas/:ID', 'DELETE', 'peliculaApiController', 'delete');
 $router-> addRoute('peliculas', 'POST', 'peliculaApiController', 'create');
 $router->addRoute('peliculas/:ID', 'PUT', 'peliculaApiController', 'modificar');
 $router->addRoute('user/token', 'GET', 'authApiController', 'getToken');
-
-
-//$router-> addRoute('generos/:id_genero', 'GET', 'peliculaApiController', 'getPorGenero');
+$router-> addRoute('generos/:id_genero', 'GET', 'peliculaApiController', 'getPorGenero');
 
 
 // rutea le paso el recurso, y el metodo
